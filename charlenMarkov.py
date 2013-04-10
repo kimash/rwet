@@ -8,7 +8,7 @@ import random
 import re
 import markov
 
-#class definition from markov_by_char
+#class definition from Adam Parrish's markov_by_char.py
 class CharacterMarkovGenerator(markov.MarkovGenerator):
 	def tokenize(self, text):
 		return list(text)
@@ -21,8 +21,8 @@ words_by_len = [ [], [], [], [], [], [], [], [], [] ]
 #list for words that will be in poem
 poem_words = list()
 
-#send text through Markov by char
-generator = CharacterMarkovGenerator(n=3, max=500)
+#send text through Character Markov Generator
+generator = CharacterMarkovGenerator(n=2, max=500)
 for line in sys.stdin:	
   line = line.strip()
   generator.feed(line)
