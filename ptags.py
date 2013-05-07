@@ -10,16 +10,19 @@ import random
 sourceText = ''
 
 def extract_text(tag):
-  tag_string = tag.string
-  if tag_string is None:
-    children = tag.contents
-    result = ''
-    for child in children:
-      child_text = extract_text(child)
-      result += child_text + ' '
-    return result
+  if hasattr(tag, "name") and tag.name in ["ul", "ol", "table"]:
+	  return ""
   else:
-    return tag_string.strip()
+	  tag_string = tag.string
+	  if tag_string is None:
+		children = tag.contents
+		result = ''
+		for child in children:
+		  child_text = extract_text(child)
+		  result += child_text + ' '
+		return result
+	  else:
+		return tag_string.strip()
 
 # here's how to fake a user agent string with urllib
 class FakeMozillaOpener(urllib.FancyURLopener):
