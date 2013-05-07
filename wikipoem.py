@@ -1,11 +1,12 @@
 #Kim Ash
-#ptags.py
+#wikipoem.py
 
 from bs4 import BeautifulSoup
 import urllib
 import sys
 import re
 import random
+import markov
 
 sourceText = ''
 
@@ -39,4 +40,9 @@ sourceText += extract_text(soup.p)
 for sibling in soup.p.next_siblings:
 	sourceText += extract_text(sibling)
 
-print sourceText
+#re.sub(r"\[\s\w{1,}\s\]", "", sourceText)
+generator = markov.MarkovGenerator(n=2, max=500)
+generator.feed(sourceText)
+print generator.generate()
+
+#print sourceText
