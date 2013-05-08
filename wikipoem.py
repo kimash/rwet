@@ -6,9 +6,14 @@ import urllib
 import sys
 import re
 import random
-import markov
 
 sourceText = ''
+
+# list of 15 empty lists, one for each word length
+words_by_len = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ]
+
+# list for words that will be in poem
+poem_words = list()
 
 def extract_text(tag):
   if hasattr(tag, "name") and tag.name in ["ul", "ol", "table"]:
@@ -26,6 +31,7 @@ def extract_text(tag):
 		return tag_string.strip()
 
 # here's how to fake a user agent string with urllib
+# necessary to access articles on Wikipedia
 class FakeMozillaOpener(urllib.FancyURLopener):
   version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
 urllib._urlopener = FakeMozillaOpener()
@@ -39,10 +45,17 @@ sourceText += extract_text(soup.p)
 
 for sibling in soup.p.next_siblings:
 	sourceText += extract_text(sibling)
-
 #re.sub(r"\[\s\w{1,}\s\]", "", sourceText)
-generator = markov.MarkovGenerator(n=2, max=500)
-generator.feed(sourceText)
-print generator.generate()
 
-#print sourceText
+for i in range(len(words_by_len)):
+#find words of each length (i+1 because range() starts at 0)
+	regexp = r"\b\w{" + str(i+1) + r"}\b"
+	for match in re.findall(regexp, sourceText):
+		words_by_len[i].append(match)
+      
+#randomly select words for use in poem
+for i in range(len(words_by_len)):
+	poem_words.append(random.choice(words_by_len[i]))
+	
+print poem_words
+
