@@ -9,11 +9,12 @@ import random
 
 sourceText = ''
 
-# list of 15 empty lists, one for each word length
-words_by_len = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [] ]
+# list of 14 empty lists, one for each word length
+words_by_len = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], ]
 
 # list for words that will be in poem
 poem_words = list()
+poem = ''
 
 def extract_text(tag):
   if hasattr(tag, "name") and tag.name in ["ul", "ol", "table"]:
@@ -56,6 +57,9 @@ for i in range(len(words_by_len)):
 #randomly select words for use in poem
 for i in range(len(words_by_len)):
 	poem_words.append(random.choice(words_by_len[i]))
-	
-print poem_words
 
+print poem_words[11] + " " + poem_words[12] + " " + poem_words[5]
+print poem_words[7] + " " + poem_words[8] + "\n"
+print poem_words[10] + " " + poem_words[2] + " " + poem_words[6]
+print poem_words[3] + " " + poem_words[13]
+print poem_words[1] + " " + poem_words[9] + " " + poem_words[4]
